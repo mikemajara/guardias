@@ -4,16 +4,13 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import multiMonthPlugin from "@fullcalendar/multimonth";
 import FullCalendar from "@fullcalendar/react";
 
-export const CalendarComponent = () => {
+export const CalendarComponent = ({ events }: any) => {
   return (
     <FullCalendar
       plugins={[dayGridPlugin, multiMonthPlugin]}
-      initialView="multiMonthYear"
+      initialView="dayGridMonth"
       editable
-      events={[
-        { title: "event 1", date: "2019-04-01" },
-        { title: "event 2", date: "2019-04-02" },
-      ]}
+      events={events}
     />
   );
 };
