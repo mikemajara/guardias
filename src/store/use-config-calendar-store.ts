@@ -1,5 +1,14 @@
 import create from "zustand";
 
+export type DayOfWeek =
+  | "Monday"
+  | "Tuesday"
+  | "Wednesday"
+  | "Thursday"
+  | "Friday"
+  | "Saturday"
+  | "Sunday";
+
 interface UserRestriction {
   minDaysBetweenAssignments: number;
 }
@@ -12,10 +21,15 @@ interface SpecificDateRestriction {
   [date: string]: number;
 }
 
+interface MandatoryDayRestriction {
+  mandatoryDays: DayOfWeek[]; // Days where at least one assignment is required
+}
+
 export type Restrictions = {
   userRestriction?: UserRestriction;
   dateRestriction?: DateRestriction;
   specificDateRestriction?: SpecificDateRestriction;
+  mandatoryDayRestrictions?: MandatoryDayRestriction[];
 };
 
 interface ConfigCalendarStore {
