@@ -51,7 +51,7 @@ export const UserPanel = ({ onChangeEvents }: any) => {
       assignCalendarDays(
         users,
         format(startOfMonth(new Date()), "yyyy-MM-dd"),
-        3,
+        5,
         {
           userRestriction: {
             minDaysBetweenAssignments: 2,

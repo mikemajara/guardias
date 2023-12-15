@@ -6,9 +6,10 @@ import { UserPanel } from "@/components/users/user-panel";
 import { useAllColorsToken } from "@/hooks/use-colors";
 import { useUserStore } from "@/store/use-user-store";
 import { Stack } from "@chakra-ui/react";
+import { EventAddArg, EventApi } from "@fullcalendar/core/index.js";
 
 const Simple = () => {
-  const [events, setEvents] = useState<any>({});
+  const [events, setEvents] = useState<EventApi[]>();
   const { users } = useUserStore();
   const colors = useAllColorsToken();
   const handleEventChange = (assignments: any[]) => {
@@ -18,7 +19,7 @@ const Simple = () => {
         name: e.name,
         title: e.name,
         start: e.date,
-        backgroundColor: colors[e.color][50],
+        backgroundColor: e?.color ? colors[e.color][50] : "gray",
         borderColor: e.color,
         textColor: "black",
       }))

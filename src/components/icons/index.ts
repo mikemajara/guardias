@@ -39,7 +39,7 @@ import {
   BsXLg,
 } from "react-icons/bs";
 import { CgHashtag } from "react-icons/cg";
-import { FaUserCheck } from "react-icons/fa";
+import { FaCircle, FaRegCircle, FaUserCheck } from "react-icons/fa";
 import { FaWandMagicSparkles } from "react-icons/fa6";
 import {
   FiArrowDown,
@@ -207,3 +207,7 @@ export const IconPlayerPrevious = TbPlayerSkipBackFilled;
 
 // TAGS
 export const IconHeadphones = BsHeadphones;
+
+// DOTS
+export const IconCircleFill = FaCircle;
+export const IconCircle = FaRegCircle;

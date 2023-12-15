@@ -14,28 +14,32 @@ interface UserRestriction {
 interface DateRestriction {
   maxAssignmentsPerDay: number;
 }
+interface SpecificDateRestriction {
+  [date: string]: number; // e.g., "2024-01-25": 2
+}
 
 type Restrictions = {
   userRestriction?: UserRestriction;
   dateRestriction?: DateRestriction;
+  specificDateRestriction?: SpecificDateRestriction;
 };
 
 export function assignCalendarDays(
   people: User[],
   startDate: string,
   daysToAssign: number,
-  restrictions?: Restrictions
+  restrictions: Restrictions
 ): Assignment[] {
   const assignments: Assignment[] = [];
   const start = new Date(startDate);
-  const end = new Date(start.getFullYear(), start.getMonth() + 1, 0); // Last day of the month
+  const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
 
   const allDates: Date[] = [];
   for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
     allDates.push(new Date(d));
   }
 
-  const dateAssignments: Map<string, number> = new Map(); // Track assignments per date
+  const dateAssignments: Map<string, number> = new Map();
 
   for (const person of people) {
     const assignedDates: Date[] = [];
@@ -44,8 +48,27 @@ export function assignCalendarDays(
       let availableDates = allDates.filter((d) => {
         const dateStr = d.toISOString().split("T")[0];
 
+        // Check specific date restriction
+        if (
+          restrictions.specificDateRestriction &&
+          restrictions.specificDateRestriction[dateStr] !== undefined &&
+          (dateAssignments.get(dateStr) ?? 0) >=
+            restrictions.specificDateRestriction[dateStr]
+        ) {
+          return false;
+        }
+
+        // Check general date restriction
+        if (
+          restrictions.dateRestriction &&
+          (dateAssignments.get(dateStr) ?? 0) >=
+            restrictions.dateRestriction.maxAssignmentsPerDay
+        ) {
+          return false;
+        }
+
         // Check user restriction
-        if (restrictions?.userRestriction) {
+        if (restrictions.userRestriction) {
           const minGap = restrictions.userRestriction.minDaysBetweenAssignments;
           if (
             assignedDates.some(
@@ -58,19 +81,10 @@ export function assignCalendarDays(
           }
         }
 
-        // Check date restriction
-        if (
-          restrictions?.dateRestriction &&
-          (dateAssignments.get(dateStr) ?? 0) >=
-            restrictions.dateRestriction.maxAssignmentsPerDay
-        ) {
-          return false;
-        }
-
         return true;
       });
 
-      if (availableDates.length === 0) break; // If no more dates are available
+      if (availableDates.length === 0) break;
 
       const randomIndex = Math.floor(Math.random() * availableDates.length);
       const randomDate = availableDates[randomIndex];
