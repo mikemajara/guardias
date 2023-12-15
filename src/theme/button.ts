@@ -1,7 +1,4 @@
-import {
-  defineStyle,
-  defineStyleConfig,
-} from "@chakra-ui/styled-system";
+import { defineStyle, defineStyleConfig } from "@chakra-ui/styled-system";
 
 const baseStyle = defineStyle({
   // borderRadius: 0, // disable the border radius
@@ -23,15 +20,14 @@ const customVariant = defineStyle((props) => {
     borderRadius: "14px",
     borderWidth: 2,
     borderColor: "gray.900",
-    transition: "transform 0.15s ease-out, background 0.15s ease-out",
+    bg: `${c}.50`,
     _dark: {
       bg: `${c}.200`,
       color: "gray.800",
     },
 
     _hover: {
-      transform: "scale(1.05, 1.05)",
-      bg: `${c}.600`,
+      bg: `${c}.200`,
 
       _dark: {
         bg: `${c}.300`,
@@ -40,7 +36,6 @@ const customVariant = defineStyle((props) => {
 
     _active: {
       bg: `${c}.700`,
-      transform: "scale(1, 1)",
 
       _dark: {
         bg: `${c}.400`,

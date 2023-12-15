@@ -3,9 +3,19 @@ import { sample } from "lodash";
 import React, { useEffect, useState } from "react";
 
 import { assignCalendarDays } from "@/lib/helper-calendar";
-import { Button, HStack, IconButton, Stack } from "@chakra-ui/react";
+import { User } from "@/store/types";
+import { useUserStore } from "@/store/use-user-store";
+import {
+  Box,
+  Button,
+  chakra,
+  HStack,
+  IconButton,
+  Stack,
+} from "@chakra-ui/react";
 
-import { IconAdd, IconTrash } from "../icons";
+import { IconAdd, IconArrowsSync, IconTrash } from "../icons";
+import { FormUserAdd } from "./form-user-add";
 import { UserEntry } from "./user-entry";
 import { UserList } from "./user-list";
 
@@ -33,21 +43,14 @@ const USERS = [
 ];
 
 export const UserPanel = ({ onChangeEvents }: any) => {
-  const [users, setUsers] = useState<any>([]);
+  const { users, addUser, removeUser } = useUserStore();
   const [assignments, setAssignments] = useState<any>([]);
 
-  const handleClickAdd = (e: any) => {
-    e.preventDefault();
-    setUsers([...users, sample(USERS)]);
-  };
-
-  function handleClickDelete(i: React.Key | null | undefined): void {
-    setUsers(
-      users.filter((e: any, idx: React.Key | null | undefined) => idx != i)
-    );
+  function handleClickDelete(e: User): void {
+    if (e.id) removeUser(e.id);
   }
 
-  useEffect(() => {
+  const assignDates = () => {
     setAssignments(
       assignCalendarDays(
         users,
@@ -55,20 +58,24 @@ export const UserPanel = ({ onChangeEvents }: any) => {
         3
       )
     );
-  }, [users]);
+  };
+
+  const handleClickGenerate = () => {
+    assignDates();
+  };
 
   useEffect(() => {
     onChangeEvents(assignments);
-  }, [assignments]);
+  }, [assignments, onChangeEvents]);
 
   return (
     <Stack>
-      <pre>{JSON.stringify(assignments, null, 2)}</pre>
-      <HStack>
-        <Button rightIcon={<IconAdd />} onClick={handleClickAdd}>
-          Add
+      <Stack>
+        <Button rightIcon={<IconArrowsSync />} onClick={handleClickGenerate}>
+          Generate
         </Button>
-      </HStack>
+        <FormUserAdd />
+      </Stack>
       <Stack>
         <HStack wrap={"wrap"}>
           {users.map((e: any, i: React.Key | null | undefined) => (
@@ -79,7 +86,7 @@ export const UserPanel = ({ onChangeEvents }: any) => {
                 size="sm"
                 aria-label={"icon"}
                 icon={<IconTrash />}
-                onClick={() => handleClickDelete(i)}
+                onClick={() => handleClickDelete(e)}
               />
             </HStack>
           ))}

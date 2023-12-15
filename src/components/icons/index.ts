@@ -63,6 +63,7 @@ import {
   GoBookmarkSlash,
   GoBookmarkSlashFill,
   GoGear,
+  GoSync,
 } from "react-icons/go";
 import { GrFormAdd, GrFormSubtract } from "react-icons/gr";
 import { HiOutlineChevronRight, HiOutlineExternalLink } from "react-icons/hi";
@@ -167,6 +168,7 @@ export const IconArrowRight = FiArrowRight;
 export const IconArrowUpLeft = FiArrowUpLeft;
 export const IconArrowUpRight = FiArrowUpRight;
 export const IconArrowUp = FiArrowUp;
+export const IconArrowsSync = GoSync;
 
 export const IconThumbsUp = FiThumbsUp;
 export const IconThumbsDown = FiThumbsDown;
