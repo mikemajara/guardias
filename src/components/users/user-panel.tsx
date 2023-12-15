@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useAllColorsToken } from "@/hooks/use-colors";
 import { assignCalendarDays, Assignment } from "@/lib/helper-calendar";
 import { User } from "@/store/types";
+import { Restrictions } from "@/store/use-config-calendar-store";
 import { useEventStore } from "@/store/use-event-store";
 import { useUserStore } from "@/store/use-user-store";
 import {
@@ -60,20 +61,21 @@ export const UserPanel = ({ onChangeEvents }: any) => {
     } as unknown as EventApi;
   };
 
+  const restrictions: Restrictions = {
+    userRestriction: {
+      minDaysBetweenAssignments: 2,
+    },
+    dateRestriction: {
+      maxAssignmentsPerDay: 2,
+    },
+    mandatoryDayRestrictions: [
+      { mandatoryDays: ["Sunday"] },
+      { mandatoryDays: ["Friday", "Saturday"] },
+    ],
+  };
+  const today = format(startOfMonth(new Date()), "yyyy-MM-dd");
   const assignDates = () => {
-    let assignments = assignCalendarDays(
-      users,
-      format(startOfMonth(new Date()), "yyyy-MM-dd"),
-      5,
-      {
-        userRestriction: {
-          minDaysBetweenAssignments: 2,
-        },
-        dateRestriction: {
-          maxAssignmentsPerDay: 2,
-        },
-      }
-    );
+    let assignments = assignCalendarDays(users, today, 5, restrictions);
     setEvents(assignments.map(assignmentToEvent));
   };
 
