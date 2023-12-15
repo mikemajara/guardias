@@ -1,27 +1,11 @@
 import { User } from "@/store/types";
+import { Restrictions } from "@/store/use-config-calendar-store";
 
 export type Assignment = {
   name: string;
   email: string;
   date: string;
   color?: string;
-};
-
-interface UserRestriction {
-  minDaysBetweenAssignments: number;
-}
-
-interface DateRestriction {
-  maxAssignmentsPerDay: number;
-}
-interface SpecificDateRestriction {
-  [date: string]: number; // e.g., "2024-01-25": 2
-}
-
-type Restrictions = {
-  userRestriction?: UserRestriction;
-  dateRestriction?: DateRestriction;
-  specificDateRestriction?: SpecificDateRestriction;
 };
 
 export function assignCalendarDays(

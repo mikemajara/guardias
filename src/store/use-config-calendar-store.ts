@@ -12,7 +12,7 @@ interface SpecificDateRestriction {
   [date: string]: number;
 }
 
-type Restrictions = {
+export type Restrictions = {
   userRestriction?: UserRestriction;
   dateRestriction?: DateRestriction;
   specificDateRestriction?: SpecificDateRestriction;
