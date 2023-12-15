@@ -4,6 +4,7 @@ import React from "react";
 import { getDatesInRange } from "@/lib/helper-dates";
 import { useEventStore } from "@/store/use-event-store";
 import { HStack, Icon, Text } from "@chakra-ui/react";
+import { CalendarOptions, EventSourceInput } from "@fullcalendar/core/index.js";
 import esLocale from "@fullcalendar/core/locales/es";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
@@ -38,7 +39,7 @@ export const CalendarComponent = () => {
         </HStack>
       )}
       editable
-      events={events}
+      events={events as EventSourceInput}
     />
   );
 };
