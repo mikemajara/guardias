@@ -48,18 +48,16 @@ const USERS = [
 export const UserPanel = ({ onChangeEvents }: any) => {
   const { users } = useUserStore();
   const { setEvents } = useEventStore();
-  const [assignments, setAssignments] = useState<any>([]);
   const colors = useAllColorsToken();
 
   const assignmentToEvent = (e: Assignment): EventApi => {
     return {
       title: e.name,
-      start: new Date(e.date),
-      allDay: true,
+      start: e.date,
       backgroundColor: colors[e?.color ?? "gray"][50],
       borderColor: colors[e?.color ?? "gray"][500],
       textColor: "black",
-    } as EventApi;
+    } as unknown as EventApi;
   };
 
   const assignDates = () => {
