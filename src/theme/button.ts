@@ -17,8 +17,6 @@ const customVariant = defineStyle((props) => {
   const { colorScheme: c } = props;
   return {
     fontWeight: "medium",
-    borderRadius: "14px",
-    borderWidth: 2,
     borderColor: "gray.900",
     bg: `${c}.50`,
     _dark: {

@@ -36,6 +36,7 @@ import {
   BsTwitterX,
   BsVectorPen,
   BsX,
+  BsXLg,
 } from "react-icons/bs";
 import { CgHashtag } from "react-icons/cg";
 import { FaUserCheck } from "react-icons/fa";
@@ -145,7 +146,7 @@ export const IconTagsTopic = BsFillChatFill;
 // Maths
 export const IconAdd = IoMdAdd;
 export const IconSubtract = GrFormSubtract;
-export const IconCross = BsX;
+export const IconCross = BsXLg;
 export const IconCheck = BsCheck;
 export const IconDoubleCheck = BsCheckAll;
 

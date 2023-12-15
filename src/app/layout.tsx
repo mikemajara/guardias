@@ -1,9 +1,12 @@
 import "./globals.css";
 
+import { map } from "lodash";
 import { Inter } from "next/font/google";
 
+import { Navbar } from "@/components/navbar";
 import { Container, HStack, Stack } from "@chakra-ui/react";
 
+import { fonts } from "./fonts";
 import { Providers } from "./providers";
 
 import type { Metadata } from "next";
@@ -20,11 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={map(fonts, (e) => e["variable"]).join(" ")}>
       <body>
         <main>
           <Providers>
-            <Container maxW="container.lg" h="full">
+            <Navbar />
+            <Container maxW="container.lg" h="full" mt={10}>
               <Stack>{children}</Stack>
             </Container>
           </Providers>

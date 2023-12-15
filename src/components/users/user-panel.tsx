@@ -21,12 +21,12 @@ import { UserList } from "./user-list";
 
 const USERS = [
   {
-    name: "Bob",
-    email: "bob@guardias.com",
-  },
-  {
     name: "Alice",
     email: "alice@guardias.com",
+  },
+  {
+    name: "Bob",
+    email: "bob@guardias.com",
   },
   {
     name: "Carol",
@@ -46,16 +46,20 @@ export const UserPanel = ({ onChangeEvents }: any) => {
   const { users, addUser, removeUser } = useUserStore();
   const [assignments, setAssignments] = useState<any>([]);
 
-  function handleClickDelete(e: User): void {
-    if (e.id) removeUser(e.id);
-  }
-
   const assignDates = () => {
     setAssignments(
       assignCalendarDays(
         users,
         format(startOfMonth(new Date()), "yyyy-MM-dd"),
-        3
+        3,
+        {
+          userRestriction: {
+            minDaysBetweenAssignments: 2,
+          },
+          dateRestriction: {
+            maxAssignmentsPerDay: 2,
+          },
+        }
       )
     );
   };
@@ -66,31 +70,22 @@ export const UserPanel = ({ onChangeEvents }: any) => {
 
   useEffect(() => {
     onChangeEvents(assignments);
-  }, [assignments, onChangeEvents]);
+  }, [assignments]);
+
+  console.log(`RENDERING USER PANEL`);
 
   return (
     <Stack>
       <Stack>
         <Button rightIcon={<IconArrowsSync />} onClick={handleClickGenerate}>
-          Generate
+          Generar
         </Button>
         <FormUserAdd />
       </Stack>
       <Stack>
-        <HStack wrap={"wrap"}>
-          {users.map((e: any, i: React.Key | null | undefined) => (
-            <HStack key={i}>
-              <UserEntry user={e} />
-              <IconButton
-                variant="ghost"
-                size="sm"
-                aria-label={"icon"}
-                icon={<IconTrash />}
-                onClick={() => handleClickDelete(e)}
-              />
-            </HStack>
-          ))}
-        </HStack>
+        {users.map((e: any, i: React.Key | null | undefined) => (
+          <UserEntry key={i} user={e} />
+        ))}
       </Stack>
     </Stack>
   );

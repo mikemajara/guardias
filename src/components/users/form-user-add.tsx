@@ -17,7 +17,7 @@ interface UserFormData {
 }
 
 export const FormUserAdd = () => {
-  const { users, addUser, removeUser } = useUserStore();
+  const { addUser } = useUserStore();
 
   const {
     register,
@@ -27,10 +27,12 @@ export const FormUserAdd = () => {
   } = useForm<UserFormData>();
 
   const onSubmit = (data: UserFormData) => {
+    console.log(`ADDING USER`);
     addUser(data);
     reset();
     // Handle form submission
   };
+  console.log(`RENDERING FORM USER ADD`);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,6 +61,9 @@ export const FormUserAdd = () => {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Invalid email address",
               },
+              // validate: {
+              //   exists: (val) => !users.map((u) => u.email).includes(val),
+              // },
             })}
           />
           <FormErrorMessage>
@@ -67,7 +72,7 @@ export const FormUserAdd = () => {
         </FormControl>
 
         <Button mt={4} isLoading={isSubmitting} type="submit">
-          Add
+          Añadir
         </Button>
       </Stack>
     </form>

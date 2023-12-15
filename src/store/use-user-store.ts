@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 // useUserStore.ts
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import { User } from "./types"; // Import the User type
 
@@ -11,20 +12,27 @@ type UserState = {
   // Other actions you might need
 };
 
-export const useUserStore = create<UserState>((set) => ({
-  users: [],
+export const useUserStore = create(
+  persist<UserState>(
+    (set) => ({
+      users: [],
 
-  addUser: (user) =>
-    set((state) =>
-      !state.users.map((u) => u.email).includes(user.email)
-        ? {
-            users: [...state.users, { ...user, id: uuidv4() }],
-          }
-        : state
-    ),
+      addUser: (user) =>
+        set((state) =>
+          !state.users.map((u) => u.email).includes(user.email)
+            ? {
+                users: [...state.users, { ...user, id: uuidv4() }],
+              }
+            : state
+        ),
 
-  removeUser: (id: string) =>
-    set((state) => ({ users: state.users.filter((user) => user.id !== id) })),
+      removeUser: (id: string) =>
+        set((state) => ({
+          users: state.users.filter((user) => user.id !== id),
+        })),
 
-  // Implement other actions (like updateUser, etc.) here if needed
-}));
+      // Implement other actions (like updateUser, etc.) here if needed
+    }),
+    { name: "users" }
+  )
+);
