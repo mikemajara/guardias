@@ -21,12 +21,6 @@ const Simple = () => {
   return (
     <Stack direction={{ base: "column", sm: "row" }} h="full">
       <Heading> Comming soon </Heading>
-      {/* <Stack w={{ base: "full", sm: "25%" }}>
-        <UserPanel onChangeEvents={handleEventChange} />
-      </Stack>
-      <Stack w={{ base: "full", sm: "75%" }}>
-        <CalendarComponent events={events} />
-      </Stack> */}
     </Stack>
   );
 };

@@ -1,7 +1,10 @@
+import { User } from "@/store/types";
+
 type Assignment = {
   name: string;
   email: string;
   date: string;
+  color?: string;
 };
 
 interface UserRestriction {
@@ -18,7 +21,7 @@ type Restrictions = {
 };
 
 export function assignCalendarDays(
-  people: { name: string; email: string }[],
+  people: User[],
   startDate: string,
   daysToAssign: number,
   restrictions?: Restrictions
@@ -76,6 +79,7 @@ export function assignCalendarDays(
         name: person.name,
         email: person.email,
         date: randomDate.toISOString().split("T")[0],
+        color: person.color,
       });
 
       assignedDates.push(randomDate);

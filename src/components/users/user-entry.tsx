@@ -13,7 +13,12 @@ export const UserEntry = ({ user }: any) => {
     if (e.id) removeUser(e.id);
   }
   return (
-    <HStack p={2} justify={"space-between"}>
+    <HStack
+      p={2}
+      justify={"space-between"}
+      bg={user.color + ".50"}
+      borderRadius={"lg"}
+    >
       <Text>{user.name}</Text>
       <IconButton
         variant="ghost"

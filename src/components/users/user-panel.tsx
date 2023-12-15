@@ -72,8 +72,6 @@ export const UserPanel = ({ onChangeEvents }: any) => {
     onChangeEvents(assignments);
   }, [assignments]);
 
-  console.log(`RENDERING USER PANEL`);
-
   return (
     <Stack>
       <Stack>
