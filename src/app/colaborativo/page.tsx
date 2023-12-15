@@ -7,17 +7,6 @@ import { useUserStore } from "@/store/use-user-store";
 import { Heading, Stack } from "@chakra-ui/react";
 
 const Simple = () => {
-  const [events, setEvents] = useState<any>({});
-  const { users } = useUserStore();
-  const handleEventChange = (assignments: any[]) => {
-    setEvents(
-      assignments.map((e: any) => ({
-        name: e.name,
-        title: e.name,
-        start: e.date,
-      }))
-    );
-  };
   return (
     <Stack direction={{ base: "column", sm: "row" }} h="full">
       <Heading> Comming soon </Heading>

@@ -2,6 +2,7 @@ import { subDays } from "date-fns";
 import React from "react";
 
 import { getDatesInRange } from "@/lib/helper-dates";
+import { useEventStore } from "@/store/use-event-store";
 import { HStack, Icon, Text } from "@chakra-ui/react";
 import esLocale from "@fullcalendar/core/locales/es";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
@@ -11,7 +12,8 @@ import FullCalendar from "@fullcalendar/react";
 
 import { IconCircle, IconCircleFill } from "../icons";
 
-export const CalendarComponent = ({ events }: any) => {
+export const CalendarComponent = () => {
+  const { events } = useEventStore();
   const onDateSelect = (selectionInfo: { start: any; end: any }) => {
     const { start, end } = selectionInfo;
     console.log(`SELECTED`, getDatesInRange(start, end));

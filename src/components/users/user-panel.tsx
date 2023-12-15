@@ -2,8 +2,10 @@ import { format, startOfMonth } from "date-fns";
 import { sample } from "lodash";
 import React, { useEffect, useState } from "react";
 
-import { assignCalendarDays } from "@/lib/helper-calendar";
+import { useAllColorsToken } from "@/hooks/use-colors";
+import { assignCalendarDays, Assignment } from "@/lib/helper-calendar";
 import { User } from "@/store/types";
+import { useEventStore } from "@/store/use-event-store";
 import { useUserStore } from "@/store/use-user-store";
 import {
   Box,
@@ -43,34 +45,42 @@ const USERS = [
 ];
 
 export const UserPanel = ({ onChangeEvents }: any) => {
-  const { users, addUser, removeUser } = useUserStore();
+  const { users } = useUserStore();
+  const { setEvents } = useEventStore();
   const [assignments, setAssignments] = useState<any>([]);
+  const colors = useAllColorsToken();
+
+  const assignmentToEvent = (e: Assignment) => {
+    return {
+      name: e.name,
+      title: e.name,
+      start: e.date,
+      backgroundColor: e?.color ? colors[e.color][50] : "gray",
+      borderColor: e.color,
+      textColor: "black",
+    };
+  };
 
   const assignDates = () => {
-    setAssignments(
-      assignCalendarDays(
-        users,
-        format(startOfMonth(new Date()), "yyyy-MM-dd"),
-        5,
-        {
-          userRestriction: {
-            minDaysBetweenAssignments: 2,
-          },
-          dateRestriction: {
-            maxAssignmentsPerDay: 2,
-          },
-        }
-      )
+    let assignments = assignCalendarDays(
+      users,
+      format(startOfMonth(new Date()), "yyyy-MM-dd"),
+      5,
+      {
+        userRestriction: {
+          minDaysBetweenAssignments: 2,
+        },
+        dateRestriction: {
+          maxAssignmentsPerDay: 2,
+        },
+      }
     );
+    setEvents(assignments.map(assignmentToEvent));
   };
 
   const handleClickGenerate = () => {
     assignDates();
   };
-
-  useEffect(() => {
-    onChangeEvents(assignments);
-  }, [assignments]);
 
   return (
     <Stack>

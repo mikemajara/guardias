@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { colors } from "@/theme/colors";
-import { getToken, useToken } from "@chakra-ui/react";
+import { ColorHues, ColorProps, getToken, useToken } from "@chakra-ui/react";
 
 const grades = [
   "50",
@@ -16,7 +16,7 @@ const grades = [
   "900",
 ];
 
-export const useColorToken = (color: string) => {
+export const useColorToken = (color: string): ColorHues => {
   const colorTokens = useToken(
     "colors",
     grades.map((g) => `${color}.${g}`)
@@ -36,7 +36,7 @@ export const useColorToken = (color: string) => {
   };
 };
 
-export const useAllColorsToken = () => {
+export const useAllColorsToken = (): { [color: string]: ColorHues } => {
   return {
     gray: useColorToken("gray"),
     red: useColorToken("red"),

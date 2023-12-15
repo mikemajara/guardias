@@ -1,6 +1,6 @@
 import { User } from "@/store/types";
 
-type Assignment = {
+export type Assignment = {
   name: string;
   email: string;
   date: string;
