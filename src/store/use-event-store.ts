@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { EventApi } from "@fullcalendar/core/index.js";
+import {
+  EventApi,
+  EventSourceApi,
+  EventSourceInput,
+} from "@fullcalendar/core/index.js";
 
 interface EventStore {
   events: EventApi[];

@@ -15,6 +15,7 @@ import {
   IconButton,
   Stack,
 } from "@chakra-ui/react";
+import { EventApi } from "@fullcalendar/core/index.js";
 
 import { IconAdd, IconArrowsSync, IconTrash } from "../icons";
 import { FormUserAdd } from "./form-user-add";
@@ -50,15 +51,15 @@ export const UserPanel = ({ onChangeEvents }: any) => {
   const [assignments, setAssignments] = useState<any>([]);
   const colors = useAllColorsToken();
 
-  const assignmentToEvent = (e: Assignment) => {
+  const assignmentToEvent = (e: Assignment): EventApi => {
     return {
-      name: e.name,
       title: e.name,
-      start: e.date,
-      backgroundColor: e?.color ? colors[e.color][50] : "gray",
-      borderColor: e.color,
+      start: new Date(e.date),
+      allDay: true,
+      backgroundColor: colors[e?.color ?? "gray"][50],
+      borderColor: colors[e?.color ?? "gray"][500],
       textColor: "black",
-    };
+    } as EventApi;
   };
 
   const assignDates = () => {
